@@ -11,6 +11,9 @@ on:
       - '.github/workflows/masterIG.yaml'
   pull_request:
     branches: [ 2026.9 ]
+concurrency:
+  group: jfagy-jpfhir-publish
+  queue: max
 permissions: {}
 env:
   release_version : 20260925

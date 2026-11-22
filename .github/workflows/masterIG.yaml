@@ -84,9 +84,9 @@ jobs:
         pwd
         echo '--1-'
         mkdir -p /home/runner/.fhir
-        mv $JPPACKAGECOREtgz /home/runner/.fhir/
+        mv "$JPPACKAGECOREtgz" /home/runner/.fhir/
         cd /home/runner/.fhir
-        tar xzf $JPPACKAGECOREtgz
+        tar xzf "$JPPACKAGECOREtgz"
 
     - name: cp tgz-temp/*.tgz       
       run: | 

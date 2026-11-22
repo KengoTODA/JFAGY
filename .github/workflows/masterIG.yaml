@@ -21,14 +21,14 @@ jobs:
         
     environment: SSH_PORT_JPFHIR  # JAMI WG アップロードサイトに関するアクセス情報の環境名
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
     - name: Set up JDK 17
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6.3.0
       with:
         distribution: temurin  # Eclipse Temurin JDK
         java-version: '17'
     - name: Set up Ruby ${{ matrix.ruby-version }}
-      uses: ruby/setup-ruby@ec02537da5712d66d4d50a0f33b7eb52773b5ed1
+      uses: ruby/setup-ruby@be3c7df29b3349ec6bcfc6b4792f1cf9f5237d18 # v1.343.0
       with:
         ruby-version: ${{ matrix.ruby-version }} 
     - name: ssh key generate
@@ -40,9 +40,10 @@ jobs:
           curl -vv -H "Authorization: token ${{ secrets.PERSONAL_TOKEN }}" -H "Accept: application/vnd.github.everest-preview+json" "https://api.github.com/repos/jami-fhir-jp-wg/eDischargeSummary/dispatches" --data '{"event_type": "update", "client_payload": {"ref": "develop1.0"}}'
 
     - name: Setup npm
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
       with:
-        check-latest: true
+        node-version: '24'
+        package-manager-cache: false
 
     - name: Setup Sushi
       run: |
@@ -53,7 +54,7 @@ jobs:
         sudo apt-get install jekyll
   
     - name: Download IG Publisher
-      uses: Legion2/download-release-action@v2.1.0
+      uses: Legion2/download-release-action@68df3d242858e28a7e6d8b9838a3e6730cdfc422 # v2.1.0
       with:
         repository: HL7/fhir-ig-publisher
         tag: '2.0.25'
@@ -61,7 +62,7 @@ jobs:
         file: publisher.jar
 
     - name: Download the file
-      uses: suisei-cn/actions-download-file@v1.4.0
+      uses: suisei-cn/actions-download-file@9f75b8c2dad5ccced7509c44a3b881c5613abde2 # v1.6.1
       id: downloadfile1
       with:
         url: "https://jpfhir.jp/fhir/fhir_dotFHIR_packages.tgz"

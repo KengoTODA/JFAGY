@@ -56,12 +56,12 @@ jobs:
         sudo apt-get install -y jekyll
   
     - name: Download IG Publisher
-      uses: Legion2/download-release-action@68df3d242858e28a7e6d8b9838a3e6730cdfc422 # v2.1.0
-      with:
-        repository: HL7/fhir-ig-publisher
-        tag: '2.0.25'
-        path: .
-        file: publisher.jar
+      run: |
+        mkdir -p input-cache
+        curl --fail --silent --show-error --location --retry 3 \
+          --output input-cache/publisher.jar \
+          https://github.com/HL7/fhir-ig-publisher/releases/download/2.0.25/publisher.jar
+        echo '59641561725e0765281f120efac4d1372a111b7e7b28d0362faa7a46657fedd3  input-cache/publisher.jar' | sha256sum --check
 
     - name: Download the file
       uses: suisei-cn/actions-download-file@9f75b8c2dad5ccced7509c44a3b881c5613abde2 # v1.6.1
@@ -90,8 +90,6 @@ jobs:
 
     - name: Run IG Publisher
       run: | 
-        mkdir -p input-cache
-        mv ./publisher.jar ./input-cache
         unset DISPLAY
         java -Xmx12G -Djava.awt.headless=true -jar ./input-cache/publisher.jar -ig ig.ini -tx n/a
 

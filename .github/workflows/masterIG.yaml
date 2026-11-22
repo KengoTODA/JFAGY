@@ -11,15 +11,20 @@ on:
       - '.github/workflows/masterIG.yaml'
   pull_request:
     branches: [ 2026.9 ]
+permissions: {}
 env:
   release_version : 20260925
   release_edition : R02
 jobs:
   turn1:
     runs-on: ubuntu-26.04
+    permissions:
+      contents: read
     environment: SSH_PORT_JPFHIR  # JAMI WG アップロードサイトに関するアクセス情報の環境名
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
     - name: Set up JDK 17
       uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6.3.0
       with:

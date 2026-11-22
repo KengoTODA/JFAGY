@@ -13,7 +13,8 @@ on:
     branches: [ 2026.9 ]
 concurrency:
   group: jfagy-jpfhir-publish
-  queue: max
+  cancel-in-progress: false
+  queue: single
 permissions: {}
 env:
   release_version : 20260925

@@ -16,11 +16,7 @@ env:
   release_edition : R02
 jobs:
   turn1:
-    runs-on: ubuntu-22.04
-    strategy:
-      matrix:
-        ruby-version: ['3.2.1']
-        
+    runs-on: ubuntu-26.04
     environment: SSH_PORT_JPFHIR  # JAMI WG アップロードサイトに関するアクセス情報の環境名
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -29,10 +25,10 @@ jobs:
       with:
         distribution: temurin  # Eclipse Temurin JDK
         java-version: '17'
-    - name: Set up Ruby ${{ matrix.ruby-version }}
+    - name: Set up Ruby 3.4
       uses: ruby/setup-ruby@be3c7df29b3349ec6bcfc6b4792f1cf9f5237d18 # v1.343.0
       with:
-        ruby-version: ${{ matrix.ruby-version }} 
+        ruby-version: '3.4'
     - name: ssh key generate
       run: |
           echo "starting"
@@ -54,7 +50,8 @@ jobs:
   
     - name: Install Jekyll
       run: |
-        sudo apt-get install jekyll
+        sudo apt-get update
+        sudo apt-get install -y jekyll
   
     - name: Download IG Publisher
       uses: Legion2/download-release-action@68df3d242858e28a7e6d8b9838a3e6730cdfc422 # v2.1.0
